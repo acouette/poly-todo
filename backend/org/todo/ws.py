@@ -1,12 +1,15 @@
 import json
+
 from flask import Flask
+from flask import Response
 from flask import jsonify
 from flask import request
-from uuid import uuid4
-from flask import Response
+from flask.ext.cors import CORS
+
 from org.todo.repository import Repository
 
 app = Flask(__name__)
+CORS(app)
 
 repository = Repository()
 
@@ -27,10 +30,8 @@ def get_todo(todo_id):
 @app.route("/todos", methods=['POST'])
 def add_todo():
     new_todo = request.json
-    new_todo['id'] = str(uuid4())
     new_todo['done'] = False
-    repository.insert(new_todo)
-    return new_todo['id']
+    return repository.insert(new_todo)
 
 
 @app.route("/todos/<string:todo_id>", methods=['DELETE'])
@@ -44,7 +45,7 @@ def delete_todo(todo_id):
 
 @app.route("/todos/<string:todo_id>", methods=['PUT'])
 def update_todo(todo_id):
-    repository.update(request.json)
+    repository.update(todo_id, request.json)
     return Response(status=202)
 
 
