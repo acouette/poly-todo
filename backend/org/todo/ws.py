@@ -14,12 +14,12 @@ CORS(app)
 repository = Repository()
 
 
-@app.route("/todos", methods=['GET'])
+@app.route('/todos', methods=['GET'])
 def get_todos():
     return json.dumps(repository.find_all())
 
 
-@app.route("/todos/<string:todo_id>", methods=['GET'])
+@app.route('/todos/<string:todo_id>', methods=['GET'])
 def get_todo(todo_id):
     todo = repository.find_by_id(todo_id)
     if todo is None:
@@ -27,14 +27,14 @@ def get_todo(todo_id):
     return jsonify(todo)
 
 
-@app.route("/todos", methods=['POST'])
+@app.route('/todos', methods=['POST'])
 def add_todo():
     new_todo = request.json
     new_todo['done'] = False
     return repository.insert(new_todo)
 
 
-@app.route("/todos/<string:todo_id>", methods=['DELETE'])
+@app.route('/todos/<string:todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
     todo = repository.find_by_id(todo_id)
     if todo is None:
@@ -43,11 +43,11 @@ def delete_todo(todo_id):
     return Response(status=200)
 
 
-@app.route("/todos/<string:todo_id>", methods=['PUT'])
+@app.route('/todos/<string:todo_id>', methods=['PUT'])
 def update_todo(todo_id):
     repository.update(todo_id, request.json)
     return Response(status=202)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

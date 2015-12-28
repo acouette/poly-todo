@@ -4,7 +4,7 @@ from pymongo import MongoClient
 
 class Repository:
     def __init__(self):
-        client = MongoClient()
+        client = MongoClient('db', 27017)
         db = client.todo_db
         self.todos = db.todos
         self.todos.remove({})
