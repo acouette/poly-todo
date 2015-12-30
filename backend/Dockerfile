@@ -6,6 +6,6 @@ RUN apt-get -y --force-yes install python3-pip
 RUN pip3 install flask
 RUN pip3 install -U flask-cors
 RUN pip3 install pymongo
-COPY backend /backend
+COPY . /backend
 EXPOSE 5000
 ENTRYPOINT PYTHONPATH=/backend python3 /backend/org/todo/ws.py

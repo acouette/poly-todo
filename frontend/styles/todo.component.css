@@ -1,0 +1,14 @@
+.todo-wrapper {
+    text-align: center;
+}
+
+.todo-title{
+    margin-bottom: 20px;
+    color: #621008;
+}
+
+.todo-input{
+    font-size: 1.4em;
+    border-radius: 3px 3px 3px 3px;
+    border: 1px solid #00c8c5;
+}

@@ -5,32 +5,29 @@ import {Injectable} from 'angular2/core';
 @Injectable()
 export class TodoService {
 
-    constructor(public http:Http) {
+    private todoUrl:string = 'http://localhost:5000/todos';
+    private requestOpt:any = {headers: new Headers({'Content-Type': 'application/json'})};
+
+
+    constructor(private http:Http) {
 
     }
 
+
     getTodos() {
-        return this.http.get('http://localhost:5000/todos').map(res => {
+        return this.http.get(this.todoUrl).map(res => {
             return JSON.parse(res.text());
         });
     }
 
 
     addTodo(todo:Todo) {
-
-        var requestOpt = {headers: new Headers({'Content-Type': 'application/json'})};
-        return this.http.post('http://localhost:5000/todos', JSON.stringify(todo), requestOpt);
-    }
-}
-
-class RequestArgs implements RequestOptionsArgs {
-
-
-    constructor(headers:Headers) {
-        this.headers = headers;
+        return this.http.post(this.todoUrl, JSON.stringify(todo), this.requestOpt);
     }
 
-    headers:Headers;
+    updateTodo(todo:Todo){
+        return this.http.put(this.todoUrl+'/'+todo._id, JSON.stringify(todo), this.requestOpt);
+    }
 }
 
 
